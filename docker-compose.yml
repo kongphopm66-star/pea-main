@@ -1,0 +1,70 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: travel_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: travel_project  # ✅ แก้เป็นชื่อ DB ของเรา
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: Asia/Bangkok
+    ports:
+      - "127.0.0.1:${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      # ถ้ามีไฟล์ init.sql ให้ uncomment บรรทัดล่าง
+      # - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks: [stack]
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    # หมายเหตุ: ถ้าใช้ Mac ชิป M1/M2 ให้เปลี่ยน image เป็น: arm64v8/phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      UPLOAD_LIMIT: 256M
+    ports:
+      - "${PHPMYADMIN_PORT:-8888}:80" # ✅ Port 8888 ตามรูป
+    depends_on: [mysql]
+    networks: [stack]
+
+  api:
+    build: ./01_api
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: ${API_PORT}
+      DB_HOST: mysql
+      DB_PORT: ${DB_PORT}
+      DB_NAME: travel_project # ✅ แก้เป็นชื่อ DB ของเรา
+      DB_USER: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: Asia/Bangkok
+    ports:
+      - "${API_PORT:-3001}:3001" # ✅ Port 3001 ตามรูป
+    depends_on: [mysql]
+    networks: [stack]
+
+  frontend:
+    build:
+      context: ./02_frontend
+      args:
+        # ใช้ localhost ถ้า User เข้าผ่าน Browser เครื่องตัวเอง
+        - API_HOST=${API_HOST:-http://localhost:3001} 
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_HOST=${API_HOST:-http://localhost:3001}
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000" # ✅ Port 3000 ตามรูป
+    depends_on: [api]
+    networks: [stack]
+
+volumes:
+  mysql_data:
+
+networks:
+  stack:
+    driver: bridge
