@@ -1,22 +1,49 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Dec 12, 2025 at 09:30 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
 CREATE DATABASE IF NOT EXISTS travel_project
   DEFAULT CHARACTER SET utf8mb4
   DEFAULT COLLATE utf8mb4_general_ci;
 
 USE travel_project;
 
-CREATE TABLE IF NOT EXISTS places (
-  id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(255) NOT NULL,
-  category VARCHAR(100),
-  description TEXT,
-  image_url TEXT,
-  lat DECIMAL(10,8),
-  lng DECIMAL(11,8),
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+--
+-- Table structure for table `places`
+--
 
-INSERT INTO places (id, name, category, description, image_url, lat, lng, created_at) VALUES
+CREATE TABLE `places` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `category` varchar(100) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `image_url` text DEFAULT NULL,
+  `lat` decimal(10,8) DEFAULT NULL,
+  `lng` decimal(11,8) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `places`
+--
+
+INSERT INTO `places` (`id`, `name`, `category`, `description`, `image_url`, `lat`, `lng`, `created_at`) VALUES
 (1, 'ดอยอินทนนท์', 'travel', 'ยอดเขาที่สูงที่สุดในประเทศไทย อากาศดีมาก', 'https://image-tc.galaxy.tf/wijpeg-sxrfid5inslt46adwg0pwpho/intanon_standard.jpg?crop=112%2C0%2C1777%2C1333', 18.58866900, 98.48722600, '2025-12-08 06:35:54'),
 (2, 'Chom Cafe', 'cafe', 'คาเฟ่สวนป่า บรรยากาศเหมือนหลุดเข้าไปในนิยาย', 'https://www.lemon8-app.com/seo/image?item_id=7375044771594748417&index=0&sign=b56649bdc466485fc05fba71edab05e7', 18.74052300, 98.94367500, '2025-12-08 06:35:54'),
 (3, 'ร้านข้าวซอยแม่สาย', 'restaurant', 'ข้าวซอยต้นตำรับ อร่อยและราคาไม่แพง', 'https://img.salehere.co.th/p/600x0/2021/05/28/pzxonxiwfrzh.jpg', 18.79012300, 98.98045600, '2025-12-08 06:35:54'),
@@ -35,3 +62,28 @@ INSERT INTO places (id, name, category, description, image_url, lat, lng, create
 (16, 'ก๋วยเตี๋ยวเรืออนุสาวรีย์', 'restaurant', 'ร้านก๋วยเตี๋ยวเรือที่มีชื่อเสียงมายาวนาน', 'https://thailandindy.com/wp-content/uploads/2017/08/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B9%80%E0%B8%A3%E0%B8%B7%E0%B8%AD%E0%B8%AD%E0%B8%99%E0%B8%B8%E0%B9%80%E0%B8%AA%E0%B8%B2%E0%B8%A7%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B9%8C.jpg', 13.76400000, 100.53700000, '2025-12-08 06:40:12'),
 (17, 'ร้านอาหารทะเลปรีชา', 'restaurant', 'อาหารทะเลสดใหม่ริมทะเล บรรยากาศดี', 'https://s3-ap-southeast-1.amazonaws.com/photo.wongnai.com/photos/2016/09/07/dee9d8a075c64739a203227307578c1e.jpg', 12.87000000, 100.92000000, '2025-12-08 06:40:13'),
 (18, 'ครัวเจ๊ง้อ', 'restaurant', 'ร้านอาหารจีน-ไทยรสชาติกลมกล่อม เมนูหลากหลาย', 'https://f.ptcdn.info/594/036/000/nwj282am3wCh41XEbOC-o.jpg', 13.73000000, 100.58000000, '2025-12-08 06:40:14');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `places`
+--
+ALTER TABLE `places`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `places`
+--
+ALTER TABLE `places`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
