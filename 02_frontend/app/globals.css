@@ -91,7 +91,7 @@ body {
   border-radius: 0 0 30px 30px;
   
   /* ⚠️ ใส่ URL รูปภาพที่คุณต้องการตรงนี้ */
-  background-image: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1920&auto=format&fit=crop'); 
+  background-image: url('https://wp-headless.elca-cloud.com/glion/wp-content/uploads/sites/2/2025/04/BTLHeader.jpg'); 
   background-size: cover;
   background-position: center;
 }
